@@ -3,7 +3,9 @@ module Github
     def call(user, repo)
       response = get("/repos/#{user}/#{repo}/issues/comments")
       if response.status == 200
-        Rails.logger.debug JSON.parse(response.body).last["body"]
+        data = JSON.parse(response.body).map{|v| v["body"]}
+        puts data
+        Rails.logger.debug data
       else
         Rails.logger.fatal "Failed to fetch notification"
       end
