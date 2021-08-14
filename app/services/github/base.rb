@@ -11,10 +11,10 @@ module Github
         Accept: "#{API_VERSION}"
       }
       @client = Faraday.new @base_uri do |f|
-        f.basic_auth(
-          Rails.application.credentials.github[:client_id],
-          Rails.application.credentials.github[:secret_id]
-        )
+        f.request  :url_encoded
+        f.request  :retry, max: 3, interval: 0.5
+        f.response :logger, Rails.logger
+        f.adapter  :net_http
       end
     end
 
