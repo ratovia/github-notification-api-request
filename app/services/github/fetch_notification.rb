@@ -4,8 +4,8 @@ module Github
       response = get("/repos/#{user}/#{repo}/issues/comments")
       if response.status == 200
         data = JSON.parse(response.body).map{|v| v["body"]}
-        puts data
         Rails.logger.debug data
+        return data
       else
         Rails.logger.fatal "Failed to fetch notification"
       end
